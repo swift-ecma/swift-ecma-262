@@ -1,28 +1,34 @@
+import Byte
+
 extension ECMA_262.Template {
     public struct Literal: Sendable, Hashable {
         public let characters: String
 
         public init(_ text: String) {
-            var characters = ""
-            characters.reserveCapacity(text.utf8.count)
-            var scalars = text.unicodeScalars.makeIterator()
-            var pending = scalars.next()
-            while let scalar = pending {
-                pending = scalars.next()
-                switch scalar {
-                case "\\":
-                    characters.append("\\\\")
-                case "`":
-                    characters.append("\\`")
-                case "$" where pending == "{":
-                    characters.append("\\$")
-                case "\r":
-                    characters.append("\\r")
+            var bytes: [Byte] = []
+            bytes.reserveCapacity(text.utf8.count)
+            var units = text.utf8.makeIterator()
+            var pending = units.next()
+            while let unit = pending {
+                pending = units.next()
+                switch unit {
+                case UInt8(ascii: "\\"):
+                    bytes += "\\\\"
+
+                case UInt8(ascii: "`"):
+                    bytes += "\\`"
+
+                case UInt8(ascii: "$") where pending == UInt8(ascii: "{"):
+                    bytes += "\\$"
+
+                case UInt8(ascii: "\r"):
+                    bytes += "\\r"
+
                 default:
-                    characters.unicodeScalars.append(scalar)
+                    bytes.append(Byte(bitPattern: unit))
                 }
             }
-            self.characters = characters
+            self.characters = String(decoding: bytes, as: UTF8.self)
         }
     }
 }

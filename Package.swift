@@ -17,9 +17,15 @@ let package = Package(
             targets: ["ECMA 262"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main")
+    ],
     targets: [
         .target(
-            name: "ECMA 262"
+            name: "ECMA 262",
+            dependencies: [
+                .product(name: "Byte", package: "swift-byte")
+            ]
         ),
         .testTarget(
             name: "ECMA 262 Tests",

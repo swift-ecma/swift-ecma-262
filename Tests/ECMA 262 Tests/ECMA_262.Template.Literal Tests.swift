@@ -10,7 +10,7 @@ extension `ECMA_262.Template.Literal Tests` {
         @Test
         func `text without template syntax is written as it is`() {
             #expect(String(ECMA_262.Template.Literal("<p>Count: 1</p>")) == "`<p>Count: 1</p>`")
-            #expect(ECMA_262.Template.Literal("").characters == "")
+            #expect(ECMA_262.Template.Literal("").characters.isEmpty)
         }
 
         @Test
