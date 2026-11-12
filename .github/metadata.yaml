@@ -1,0 +1,12 @@
+# .github/metadata.yaml
+description: "Swift implementation of ECMA-262, the ECMAScript Language Specification: text written as JavaScript source."
+topics:
+  - standards
+  - ecma
+  - ecma-262
+  - ecmascript
+  - javascript
+homepage: "https://swift-institute.org"
+readme:
+  family: E
+embedded-target: ECMA 262
